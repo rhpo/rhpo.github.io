@@ -126,6 +126,7 @@
 </main>
 
 {#if quoteShown}
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<div class="quote-box" data-aos="fade-left" transition:blur>
 		<h1>Quote of the day</h1>
 
@@ -139,6 +140,7 @@
 			</p>
 		</div>
 
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<p on:click={() => quoteShown = false} style="margin: 0; cursor: pointer; font-size: 12px">
 			<Fa icon={faX} />
 		</p>
