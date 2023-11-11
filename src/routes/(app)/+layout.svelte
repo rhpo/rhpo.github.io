@@ -152,7 +152,11 @@
 		align-items: center;
 		gap: 1rem;
 
-		font-family: Cubano, sans-serif !important;
+		font-family: Cubano, sans-serif;
+	}
+
+	.site-title * {
+		font-family: Cubano, sans-serif;
 	}
 
 	.spinning {
