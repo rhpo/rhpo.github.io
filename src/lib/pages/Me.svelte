@@ -36,11 +36,10 @@
             <p>
                 I'm a 1st year Science & Technology (ST) student at the University of
 				<a href="https://fr.wikipedia.org/wiki/Universit%C3%A9_des_sciences_et_de_la_technologie_Houari-Boum%C3%A9di%C3%A8ne" class="inline">
-					<div class="flip-x">✨</div>
+					<span class="flip-x">✨</span>
 						USTHB
-					<div class="flip">✨</div>
-				</a>
-				. I'm currently working for SocialGYM (Dubai) from a 2023 contract.
+					<span class="flip">✨</span>
+				</a>. I'm currently working for SocialGYM (Dubai) from a 2023 contract.
             </p>
         </div>
     </div>
@@ -55,6 +54,9 @@
 
 	.inline {
 		display: inline-flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
 	}
 
 	@keyframes wave {
