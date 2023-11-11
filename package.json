@@ -31,6 +31,7 @@
 		"@fortawesome/free-solid-svg-icons": "^6.4.2",
 		"aos": "^2.3.4",
 		"svelte-fa": "^3.0.4",
+		"svelte-preprocess": "^5.1.0",
 		"svelte-preprocess-import-assets": "^1.0.1",
 		"sveltejs-tippy": "^3.0.0",
 		"vanilla-tilt-svelte": "^1.0.4"

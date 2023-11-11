@@ -101,7 +101,7 @@
 
 <nav>
 	<section data-aos="fade-right">
-		<h1><span class="spinning">🌍</span> <span class="spinning-color">Ramy Hadid</span></h1>
+		<h1 class="site-title"><span class="spinning">🌍</span> <span class="spinning-color">Ramy Hadid</span></h1>
 
 		<div class="links">
 			{#each links as link}
@@ -147,6 +147,12 @@
 
 <style>
 
+	.site-title {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
 	.spinning {
 		display: inline-flex;
 		transform-origin: center;
@@ -154,7 +160,9 @@
 	}
 
 	.spinning-color {
-		color: var(--rotation-color);
+		/* color: var(--rotation-color); */
+		color: white;
+		text-shadow: 0 0 6px var(--rotation-color);
 	}
 
 	:global(.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after) {
