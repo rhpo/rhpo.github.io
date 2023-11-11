@@ -13,7 +13,35 @@ const config = {
 			precompress: false,
 			strict: true
 		}),
-		appDir: "build"
+		appDir: "build",
+		prerender: {
+			handleHttpError: ({ path, referrer, message }) => {
+				// // ignore deliberate link to shiny 404 page
+				// if (path === '/not-found' && referrer === '/blog/how-we-built-our-404-page') {
+				// 	return;
+				// }
+
+				// // otherwise fail the build
+				// throw new Error(message);
+
+				// ? This is the code part
+
+				console.error(`HTTP error: ${message} (${path})`);
+
+				// If the error is a 404, redirect to the custom 404 page.
+				if (message.includes('404')) {
+					return {
+						statusCode: 404,
+						headers: {
+							Location: '/not-found',
+						},
+					};
+				}
+
+				// Otherwise, fail the build.
+				throw new Error(message)
+			}
+		}
 	},
 
 	preprocess: [
@@ -21,35 +49,6 @@ const config = {
 			[importAssets()]
 		)
 	],
-
-	prerender: {
-		handleHttpError: ({ path, referrer, message }) => {
-			// // ignore deliberate link to shiny 404 page
-			// if (path === '/not-found' && referrer === '/blog/how-we-built-our-404-page') {
-			// 	return;
-			// }
-
-			// // otherwise fail the build
-			// throw new Error(message);
-
-			// ? This is the code part
-
-			console.error(`HTTP error: ${message} (${path})`);
-
-			// If the error is a 404, redirect to the custom 404 page.
-			if (message.includes('404')) {
-				return {
-					statusCode: 404,
-					headers: {
-						Location: '/not-found',
-					},
-				};
-			}
-
-			// Otherwise, fail the build.
-			throw new Error(message)
-		}
-	},
 
 	vite: {
 		optimizeDeps: {
