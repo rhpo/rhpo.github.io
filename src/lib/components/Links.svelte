@@ -1,7 +1,7 @@
 <script>
     // @ts-nocheck
 	import Button from "$lib/ui/Button.svelte";
-    import {faDiscord, faFacebook, faGithub, faLinkedin, faViber, faWhatsapp, faYoutube} from "@fortawesome/free-brands-svg-icons";
+    	import {faDiscord, faFacebook, faGithub, faLinkedin, faViber, faWhatsapp, faYoutube} from "@fortawesome/free-brands-svg-icons";
 	import { faA, faAt } from "@fortawesome/free-solid-svg-icons";
 
 </script>
