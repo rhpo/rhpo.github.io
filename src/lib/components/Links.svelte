@@ -16,7 +16,7 @@
 
     <Button
         icon={faLinkedin}
-        href="https://github.com/rhpo/"
+        href="https://www.linkedin.com/in/ramyhadid/"
         color="#0077b5"
         textColor="white"
         fullw
