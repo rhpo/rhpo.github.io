@@ -34,12 +34,12 @@
                 </h1>
             </div>
             <p>
-                I'm a 1st year Science & Technology (ST) student at the University of
-				<a href="https://fr.wikipedia.org/wiki/Universit%C3%A9_des_sciences_et_de_la_technologie_Houari-Boum%C3%A9di%C3%A8ne" class="inline">
+                I'm a Computer Science (CS) student at the University of
+				<a href="https://www.esst-sup.com/" class="inline">
 					<span class="flip-x">✨</span>
-						USTHB
+						ESST (HIST)
 					<span class="flip">✨</span>
-				</a>. I'm currently working for SocialGYM (Dubai) from a 2023 contract.
+				</a>. I'm currently Freelancing after I've been working for SocialGYM (Dubai, a 2023 contract).
             </p>
         </div>
     </div>
