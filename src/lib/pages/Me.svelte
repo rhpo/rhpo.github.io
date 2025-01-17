@@ -34,10 +34,10 @@
                 </h1>
             </div>
             <p>
-                I'm a Computer Science (CS) student at the University of
+                I'm a Computer Science (CS) student at the École supérieure 
 				<a href="https://www.esst-sup.com/" class="inline">
 					<span class="flip-x">✨</span>
-						ESST (HIST)
+						ESST d'Alger
 					<span class="flip">✨</span>
 				</a>. I'm currently Freelancing after I've been working for SocialGYM (Dubai, a 2023 contract).
             </p>

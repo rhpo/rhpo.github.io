@@ -15,19 +15,15 @@
 			name: 'CSS',
 			icon: 'css3'
 		},
-        {
-			name: 'SASS',
-			icon: 'sass'
+		{
+			name: 'NodeJS',
+			icon: 'nodejs'
 		},
+		        
 		{
 			name: 'JavaScript',
 			icon: 'javascript'
 		},
-
-        {
-            name: 'NodeJS',
-            icon: 'nodejs'
-        },
 
 		{
 			name: 'TypeScript',
@@ -37,6 +33,10 @@
 		{
 			name: 'C++',
 			icon: 'cplusplus'
+		},
+		{
+			name: 'C',
+			icon: 'c'
 		},
 		{
 			name: 'C#',
@@ -54,8 +54,8 @@
 		},
 
 		{
-			name: 'Arduino',
-			icon: 'arduino'
+			name: 'Go',
+			icon: 'go'
 		},
 
 		{
