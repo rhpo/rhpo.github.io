@@ -38,12 +38,16 @@
 			return;
 		}
 
-		let res = await fetch('https://rhpo.varchardev.repl.co/api/v1/notify', {
-			method: 'POST',
+		let params = new URLSearchParams();
+
+		params.append("title", data.name.value + ` (${data.email.value})`);
+		params.append("message", data.message.value);
+
+		let res = await fetch('https://server.codiha.com/notify/ + params.toString()', {
+			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(data)
+			}
 		});
 
 		if (!res.ok || !res.status === 200) {
@@ -97,7 +101,7 @@
 	<h1 data-aos="fade-right"><Fa icon={faMessage} /> Text me !</h1>
 
 	<p style="text-align: center" data-aos="fade-right">
-		I will receive a notification with your message & name on my phone, donc tu sais ;)
+		I will receive a notification with your message & name on my phone, "besh ta3ref brk"
 	</p>
 
 	<div class="messagebox">
@@ -105,7 +109,7 @@
 			<Input
 				textColor="white"
 				type="text"
-				name="Name (bech na3erfek)"
+				name="Name (so it can be friendly)"
 				bind:valid={data.name.valid}
 				bind:value={data.name.value}
 				placeholder="Your Name"
