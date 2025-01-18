@@ -43,7 +43,7 @@
 		params.append("title", data.name.value + ` (${data.email.value})`);
 		params.append("message", data.message.value);
 
-		let res = await fetch('https://server.codiha.com/notify/' + params.toString(), {
+		let res = await fetch('https://server.codiha.com/notify/?' + params.toString(), {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
