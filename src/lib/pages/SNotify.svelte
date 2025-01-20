@@ -50,7 +50,7 @@
 			}
 		});
 
-		if (!res.ok || !res.status === 200) {
+		if (!res.ok || res.status !== 200) {
 			dialog(
 				'An error occured while sending your message, please try again later.',
 				'Oops!',
@@ -61,40 +61,14 @@
 
 			loading = false;
 			return;
-		} else
-			try {
-				let json = await res.json();
+		} else {
+			dialog('Message sent successfully!', 'Horray!', faMessage);
 
-				if (!json.success) {
-					dialog(
-						'An error occured while sending your message, please try again later.',
-						'Oops!',
-						faExclamationCircle
-					);
-
-					reset();
-
-					loading = false;
-					return;
-				} else {
-					dialog('Message sent successfully!', 'Horray!', faMessage);
-
-					reset();
-					loading = false;
-				}
-			} catch {
-				dialog(
-					'An error occured while sending your message, please try again later.',
-					'Oops!',
-					faExclamationCircle
-				);
-
-				reset();
-
-				loading = false;
-				return;
-			}
+			reset();
+			loading = false;
+		}
 	}
+	
 </script>
 
 <div class="container" id="notify">
