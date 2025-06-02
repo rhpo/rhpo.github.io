@@ -1,52 +1,53 @@
 <script>
-    // @ts-nocheck
+	// @ts-nocheck
 
 	import tilt from 'vanilla-tilt-svelte';
-    import pfp from '$lib/images/pfp.jpg';
+	import pfp from '$lib/images/pfp.jpg';
 	import pfpTrans from '$lib/images/pfp.png';
 </script>
 
-<section class="ana">
-    <div class="image-wrapper" data-aos="fade-right" data-aos-duration="2000">
-        <div
-            class="image"
-            use:tilt={{
-                scale: 1,
-                max: 8,
-                speed: 400,
-                glare: true,
-                gyroscope: false,
-                startX: -8
-            }}
-        >
-            <img src={pfp} alt="A pic-ture of Me!" />
-            <img class="me" src={pfpTrans} alt="A pic-ture of Me!" />
-        </div>
-    </div>
+<section id="about" class="ana">
+	<div class="image-wrapper" data-aos="fade-right" data-aos-duration="2000">
+		<div
+			class="image"
+			use:tilt={{
+				scale: 1,
+				max: 8,
+				speed: 400,
+				glare: true,
+				gyroscope: false,
+				startX: -8
+			}}
+		>
+			<img src={pfp} alt="A pic-ture of Me!" />
+			<img class="me" src={pfpTrans} alt="A pic-ture of Me!" />
+		</div>
+	</div>
 
-    <div class="info" data-aos="fade-down">
-        <div class="wrap" data-aos="flip-right" data-aos-duration="2000">
-            <div class="text">
-                <div class="box" />
-                <h1 style="white-space: nowrap">
-                    Ramy Hadid
-                    <div class="hue">👋</div>
-                </h1>
-            </div>
-            <p>
-                I'm a Computer Science (CS) student at the École supérieure 
+	<div class="info" data-aos="fade-down">
+		<div class="wrap" data-aos="flip-right" data-aos-duration="2000">
+			<div class="text">
+				<div class="box" />
+				<h1 style="white-space: nowrap">
+					Ramy Hadid
+					<div class="hue">👋</div>
+				</h1>
+			</div>
+			<p>
+				I'm a Computer Science (CS) student at the École supérieure
 				<a href="https://www.esst-sup.com/" class="inline">
 					<span class="flip-x">✨</span>
-						ESST d'Alger
+					ESST d'Alger
 					<span class="flip">✨</span>
-				</a>. I'm currently Freelancing after I've been working for SocialGYM (Dubai, a 2023 contract).
-            </p>
-        </div>
-    </div>
+				</a>. I'm currently Freelancing after I've been working for SocialGYM (Dubai, a 2023
+				contract).
+			</p>
+		</div>
+	</div>
 </section>
 
 <style>
-    .hue {
+	.hue {
 		animation: wave 4s infinite;
 		transform-origin: 70% 70%;
 		display: inline-block;
@@ -86,7 +87,7 @@
 		}
 	}
 
-    section {
+	section {
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -235,7 +236,6 @@
 		transform-origin: center;
 	}
 
-
 	@keyframes flipping {
 		0% {
 			transform: rotateY(0deg);
@@ -251,7 +251,6 @@
 	}
 
 	@media screen and (max-width: 760px) {
-
 		.ana {
 			flex-direction: column;
 			align-items: center;
@@ -293,7 +292,7 @@
 		}
 	}
 
-    @media screen and (max-width: 760px) {
+	@media screen and (max-width: 760px) {
 		.ana {
 			flex-direction: column;
 			align-items: center;

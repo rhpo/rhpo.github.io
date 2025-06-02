@@ -5,7 +5,7 @@
 	import Fa from 'svelte-fa';
 </script>
 
-<div class="container linkbox" data-aos="flip-right" data-aos-duration="1200">
+<div id="links" class="container linkbox" data-aos="flip-right" data-aos-duration="1200">
 	<h1><Fa icon={faChain} /> Social Links</h1>
 	<p class="description">You can contact me via one of those links...</p>
 
@@ -15,7 +15,6 @@
 </div>
 
 <style>
-
 	.linkbox {
 		text-align: center;
 	}
@@ -47,7 +46,7 @@
 			justify-content: center;
 			align-items: center;
 
-            max-width: 650px;
+			max-width: 650px;
 		}
 	}
 
@@ -58,7 +57,7 @@
 		}
 	}
 
-    .clink {
+	.clink {
 		display: flex;
 		gap: 1rem;
 	}

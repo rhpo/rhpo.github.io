@@ -1,8 +1,18 @@
 <script>
 	// @ts-nocheck
-	import { faBook, faHome, faImages, faInfoCircle, faMessage, faPhone, faX } from '@fortawesome/free-solid-svg-icons';
+	import {
+		faBook,
+		faBrain,
+		faHome,
+		faImages,
+		faInfoCircle,
+		faMessage,
+		faPhone,
+		faStar,
+		faX
+	} from '@fortawesome/free-solid-svg-icons';
 	import { navigating } from '$app/stores';
-	import { dialogOptions, menuOpen } from "$lib/store.js";
+	import { dialogOptions, menuOpen } from '$lib/store.js';
 	import { onMount } from 'svelte';
 	import { blur, fade, slide } from 'svelte/transition';
 	import { Hamburger } from 'svelte-hamburgers';
@@ -17,69 +27,92 @@
 	import Input from '$lib/ui/Input.svelte';
 	import Alert from '$lib/ui/Alert.svelte';
 
+	let quote = {
+		text: '',
+		author: ''
+	};
+
+	async function fetchQuote() {
+		try {
+			const res = await fetch(
+				'https://api.jsongpt.com/json?prompt=Generate%201%20programming%20quote%20and%20its%20author&author=string&quote=string'
+			);
+
+			const data = await res.json();
+			quote.text = data.quote;
+			quote.author = data.author;
+		} catch (e) {
+			console.log(e);
+			quote.text = "Life is like a box of chocolates. You never know what you're gonna get.";
+			quote.author = 'Forrest Gump';
+		}
+	}
+
 	onMount(() => {
 		AOS.init({
 			duration: 1000,
 			gyroscope: false
 		});
+		fetchQuote();
 	});
 
 	let links = [
 		{
-			name: "Home",
+			name: 'Home',
 			icon: faHome,
-			link: "/"
+			link: '/'
 		},
 		{
-			name: "About",
+			name: 'About',
 			icon: faInfoCircle,
-			link: "/about"
+			link: '#about'
 		},
 		{
-			name: "Story",
-			icon: faBook,
-			link: "/story"
+			name: 'Skills',
+			icon: faBrain,
+			link: '#skills'
 		},
 		{
-			name: "Gallery",
-			icon: faImages,
-			link: "/gallery"
+			name: 'Highlight',
+			icon: faStar,
+			link: '#highlight'
 		},
 		{
-			name: "Contact",
+			name: 'Links',
 			icon: faPhone,
-			link: "/contact"
+			link: '#links'
 		}
 	];
 
 	let pageLoading = true;
 	onMount(() => {
-		pageLoading = false
+		pageLoading = false;
 
 		window.addEventListener('scroll', () => {
 			document.documentElement.style.setProperty('--rotation-degrees', `${window.scrollY / 2}deg`);
-			// document.documentElement.style.setProperty('--rotation-color', `hsl(${window.scrollY / 2}, 100%, 50%)`);
-			//no, we're gonna make it start from white and go orange, and NEVER go black
-
-			// document.documentElement.style.setProperty('--rotation-color', `hsl(${window.scrollY / 2}, 100%, 70%)`);
-			// I don't like how it starts with the red color, let's change this:
-			document.documentElement.style.setProperty('--rotation-color', `hsl(${window.scrollY / 2 + 180}, 100%, 70%)`);
-		})
+			document.documentElement.style.setProperty(
+				'--rotation-color',
+				`hsl(${window.scrollY / 2 + 180}, 100%, 70%)`
+			);
+		});
 	});
 
 	let quoteShown = true;
 </script>
 
 <svelte:head>
-	<title>
-		Ramy Hadid &horbar; Personal Website
-	</title>
+	<title>Ramy Hadid &horbar; Personal Website</title>
 
 	<link rel="icon" href={icon} />
 </svelte:head>
 
 <div class="alert">
-	<Alert bind:isOpen={$dialogOptions.open} bind:message={$dialogOptions.message} bind:title={$dialogOptions.title} bind:icon={$dialogOptions.icon} />
+	<Alert
+		bind:isOpen={$dialogOptions.open}
+		bind:message={$dialogOptions.message}
+		bind:title={$dialogOptions.title}
+		bind:icon={$dialogOptions.icon}
+	/>
 </div>
 
 {#if pageLoading || $navigating}
@@ -89,7 +122,7 @@
 {/if}
 
 {#if $menuOpen}
-	<menu transition:slide={{axis: 'x'}}>
+	<menu transition:slide={{ axis: 'x' }}>
 		{#each links as link}
 			<a href={link.link} class:active={link.link === $navigating?.path}>
 				<Fa icon={link.icon} />
@@ -101,7 +134,9 @@
 
 <nav>
 	<section data-aos="fade-right">
-		<h1 class="site-title"><span class="spinning">🌍</span> <span class="spinning-color">Ramy Hadid</span></h1>
+		<h1 class="site-title">
+			<span class="spinning">🌍</span> <span class="spinning-color">Ramy Hadid</span>
+		</h1>
 
 		<div class="links">
 			{#each links as link}
@@ -113,11 +148,13 @@
 		</div>
 
 		<div class="ham">
-			<Hamburger bind:open={$menuOpen} on:click={() => {
-				menuOpen.update(v => !v);
-			}} />
+			<Hamburger
+				bind:open={$menuOpen}
+				on:click={() => {
+					menuOpen.update((v) => !v);
+				}}
+			/>
 		</div>
-
 	</section>
 </nav>
 
@@ -131,24 +168,19 @@
 		<h1>Quote of the day</h1>
 
 		<div class="quote">
-			<p>
-				"Life is like a box of chocolates. You never know what you're gonna get."
-			</p>
-
-			<p>
-				- Forrest Gump
-			</p>
+			<p>{quote.text ? `"${quote.text}"` : 'Loading...'}</p>
+			<p>- {quote.author}</p>
 		</div>
 
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<p on:click={() => quoteShown = false} style="margin: 0; cursor: pointer; font-size: 12px">
+		<p on:click={() => (quoteShown = false)} style="margin: 0; cursor: pointer; font-size: 12px">
 			<Fa icon={faX} />
 		</p>
 	</div>
 {/if}
 
 <style>
-
+	/* ...styles unchanged... */
 	.site-title {
 		display: flex;
 		align-items: center;
@@ -262,7 +294,7 @@
 		}
 
 		.quote-box .quote {
-			font-size: .8rem;
+			font-size: 0.8rem;
 			line-height: 1;
 			word-break: break-word;
 		}
@@ -282,18 +314,17 @@
 		}
 
 		.quote-box .quote {
-			font-size: .6rem;
+			font-size: 0.6rem;
 			font-weight: 100;
 			line-height: 1;
 			word-break: break-word;
 		}
-
 	}
 
 	:root {
 		--nav-body: 140px;
 		--nav: calc(var(--nav-body) - var(--space) * 2);
-        --space: 3rem;
+		--space: 3rem;
 	}
 
 	:global(body) {
@@ -355,7 +386,7 @@
 		font-family: 'Inter', sans-serif;
 		font-size: 1.2rem;
 
-		transition: all .2s ease-in-out;
+		transition: all 0.2s ease-in-out;
 	}
 
 	.links:hover a:not(:hover) {

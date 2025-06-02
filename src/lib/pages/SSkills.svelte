@@ -19,7 +19,7 @@
 			name: 'NodeJS',
 			icon: 'nodejs'
 		},
-		        
+
 		{
 			name: 'JavaScript',
 			icon: 'javascript'
@@ -89,15 +89,15 @@
 			colorless: true
 		},
 
-        {
-            name: 'Git',
-            icon: 'git',
-        },
+		{
+			name: 'Git',
+			icon: 'git'
+		},
 
 		{
 			name: 'GitHub',
 			icon: 'github',
-            colorless: true
+			colorless: true
 		},
 
 		{
@@ -107,7 +107,7 @@
 	];
 </script>
 
-<div class="container skillbox" data-aos="flip-right" data-aos-duration="1200">
+<div id="skills" class="container skillbox" data-aos="flip-right" data-aos-duration="1200">
 	<h1><Fa icon={faBrain} /> My Skills</h1>
 	<p class="description">
 		Those are the skills I have acquired over the years. I am always learning new things and I am
@@ -144,16 +144,18 @@
 	</div>
 </div>
 
-<embed data-aos="flip-up" src="https://github-readme-stats.vercel.app/api?username=rhpo&hide_border=true&show_icons=true&theme=dark&border_radius=14" width="700">
+<embed
+	data-aos="flip-up"
+	src="https://github-readme-stats.vercel.app/api?username=rhpo&hide_border=true&show_icons=true&theme=dark&border_radius=14"
+	width="700"
+/>
 
 <style>
-
 	embed {
 		width: 100%;
 		max-width: var(--mw);
 		margin: 20px auto;
 		display: block;
-
 	}
 
 	:global(embed > g) {
@@ -164,13 +166,13 @@
 		color: var(--accent);
 	}
 
-    :global(.tooltip) {
-        margin: 0;
-        font-family: 'Inter', sans-serif;
-        font-size: 15px;
-        font-weight: 500;
-        color: white;
-    }
+	:global(.tooltip) {
+		margin: 0;
+		font-family: 'Inter', sans-serif;
+		font-size: 15px;
+		font-weight: 500;
+		color: white;
+	}
 
 	.icon {
 		position: relative;
