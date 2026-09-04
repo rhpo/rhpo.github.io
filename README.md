@@ -1,43 +1,38 @@
-<<<<<<< HEAD
-# create-svelte
+# Portfolio Template
+Inspired from [Magic UI](https://magicui.design) Portfolio Template & [Dillion Verma](https://github.com/dillionverma)
+Build with Svelte, [shadcn-svelte](https://www.shadcn-svelte.com) and [Svelte-Animations](https://animation-svelte.vercel.app)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Features
+---
+- Setup only takes a few minutes by editing the [single config file](https://github.com/SikandarJODD/portfolio-template/blob/main/src/lib/data/resume.ts)
+- Built using SvelteKit, Typescript, Shadcn/UI, TailwindCSS, Svelte - Motion, Svelte Animations
+- Responsive for different devices
+- Optimized for Svelte and Vercel
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## Getting Started
+---
+1. Clone the repository
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+git clone https://github.com/SikandarJODD/portfolio-template
 ```
 
-## Developing
+2. Move into the project directory
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```bash
+cd portfolio-template
+```
+
+3. Install dependencies
+
+```bash
+npm install
+```
+
+4. Start the development server
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-=======
-# ramyhadid
-A short personal portfolio, feature-rich, with animations and transitions, built using SvelteKit.
->>>>>>> 96d0b6eaf26e2cc1eb50ea0b64b2a84922dd7ad3
+5. Open the [Config File](https://github.com/SikandarJODD/portfolio-template/blob/main/src/lib/data/resume.ts) and make changes
