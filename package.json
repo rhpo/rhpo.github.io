@@ -1,6 +1,9 @@
 {
 	"name": "portfolio-template",
 	"version": "0.0.1",
+	"engines": {
+    		"node": ">=22.13.0"
+	},
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
