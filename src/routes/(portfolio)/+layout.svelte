@@ -1,6 +1,6 @@
 <script>
 	import Navbar from '$lib/components/portfolio/Navbar.svelte';
-	import '../app.css';
+	import '../../app.css';
 	import { ModeWatcher, setMode } from 'mode-watcher';
 	setMode('dark');
 </script>
