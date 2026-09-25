@@ -4,35 +4,35 @@
 	import ProjectCard from '$lib/components/portfolio/ProjectCard.svelte';
 	import ResumeCard from '$lib/components/portfolio/ResumeCard.svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
-	import Badge from '$lib/components/ui/badge/badge.svelte';
 
-	import { DATA } from '$lib/data/resume';
+	import { getResumeData } from '$lib/data/resume';
+	import { locale, t } from '$lib/i18n';
 	import { marked } from 'marked';
-
-	import Fa from 'svelte-fa';
 
 	// @ts-ignore
 	import tippy from 'sveltejs-tippy';
 
 	let BLUR_FADE_DELAY = 0.04;
+
+	$: DATA = getResumeData($locale);
 </script>
 
 <svelte:head>
-	<title>{DATA.name}</title>
+	<title>{DATA.name} — {$locale === 'fr' ? 'Ingénieur Logiciel & Entrepreneur' : 'Software Engineer & Entrepreneur'}</title>
 	<meta name="description" content={DATA.description} />
-	<meta property="og:title" content={DATA.name} />
+	<meta property="og:title" content="{DATA.name} — {$locale === 'fr' ? 'Ingénieur Logiciel' : 'Software Engineer'}" />
 	<meta property="og:description" content={DATA.description} />
 	<meta property="og:url" content={DATA.url} />
 	<meta property="og:site_name" content={DATA.name} />
 	<meta property="og:image" content={DATA.img} />
-	<meta property="og:locale" content="en_US" />
+	<meta property="og:locale" content={$locale === 'fr' ? 'fr_FR' : 'en_US'} />
 	<meta property="og:type" content="website" />
 	<meta name="robots" content="index, follow" />
 	<meta
 		name="googlebot"
 		content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
 	/>
-	<meta name="twitter:title" content={DATA.name} />
+	<meta name="twitter:title" content="{DATA.name} — {$locale === 'fr' ? 'Ingénieur Logiciel' : 'Software Engineer'}" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:image" content={DATA.img} />
 	<meta name="twitter:description" content={DATA.description} />
@@ -49,15 +49,20 @@
 					<BlurFade
 						delay={BLUR_FADE_DELAY}
 						class="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none"
-						yOffset={8}>Hi, I'm {DATA.nameComposed.first} <span class="hand">👋</span></BlurFade
+						yOffset={8}
 					>
+						{$t('hero.greeting')} {DATA.nameComposed.first} <span class="hand">👋</span>
+					</BlurFade>
 
-					<BlurFade class="max-w-[600px] md:text-xl" delay={BLUR_FADE_DELAY}
-						>{DATA.description}</BlurFade
-					>
+					<BlurFade class="max-w-[600px] md:text-xl" delay={BLUR_FADE_DELAY}>
+						{DATA.description}
+					</BlurFade>
 
 					<!-- location -->
-					<BlurFade delay={BLUR_FADE_DELAY * 1.2} class="flex items-center gap-2 text-sm text-muted-foreground">
+					<BlurFade
+						delay={BLUR_FADE_DELAY * 1.2}
+						class="flex items-center gap-2 text-sm text-muted-foreground"
+					>
 						<span>{DATA.location}</span>
 					</BlurFade>
 				</div>
@@ -70,9 +75,10 @@
 			</div>
 		</div>
 	</section>
+
 	<section id="about">
 		<BlurFade delay={BLUR_FADE_DELAY}>
-			<h2 class="text-xl font-bold">About</h2>
+			<h2 class="text-xl font-bold">{$t('sections.about')}</h2>
 		</BlurFade>
 		<BlurFade delay={BLUR_FADE_DELAY * 1.4}>
 			<div
@@ -82,24 +88,26 @@
 			</div>
 		</BlurFade>
 	</section>
+
 	<section id="work">
 		<div class="flex min-h-0 flex-col gap-y-3">
 			<BlurFade delay={BLUR_FADE_DELAY}>
-				<h2 class="text-xl font-bold">Work Experience</h2>
+				<h2 class="text-xl font-bold">{$t('sections.work')}</h2>
 			</BlurFade>
-			{#each DATA.work as work, id}
+			{#each DATA.work as work, id (work.company + $locale)}
 				<BlurFade delay={BLUR_FADE_DELAY * 1.2 + id * 0.05}>
 					<ResumeCard {...work} />
 				</BlurFade>
 			{/each}
 		</div>
 	</section>
+
 	<section id="education">
 		<div class="flex min-h-0 flex-col gap-y-3">
 			<BlurFade delay={BLUR_FADE_DELAY}>
-				<h2 class="text-xl font-bold">Education</h2>
+				<h2 class="text-xl font-bold">{$t('sections.education')}</h2>
 			</BlurFade>
-			{#each DATA.education as edu, id}
+			{#each DATA.education as edu, id (edu.school + $locale)}
 				<BlurFade delay={BLUR_FADE_DELAY * 1.2 + id * 0.05}>
 					<ResumeCard
 						href={edu.href}
@@ -113,26 +121,28 @@
 			{/each}
 		</div>
 	</section>
-		<section id="internships">
+
+	<section id="internships">
 		<div class="flex min-h-0 flex-col gap-y-3">
 			<BlurFade delay={BLUR_FADE_DELAY}>
-				<h2 class="text-xl font-bold">Internships</h2>
+				<h2 class="text-xl font-bold">{$t('sections.internships')}</h2>
 			</BlurFade>
-			{#each DATA.internships as internships, id}
+			{#each DATA.internships as internship, id (internship.company + $locale)}
 				<BlurFade delay={BLUR_FADE_DELAY * 1.2 + id * 0.05}>
-					<ResumeCard {...internships} />
+					<ResumeCard {...internship} />
 				</BlurFade>
 			{/each}
 		</div>
 	</section>
+
 	<section id="skills">
 		<div class="flex min-h-0 flex-col gap-y-3">
 			<BlurFade delay={BLUR_FADE_DELAY}>
-				<h2 class="text-xl font-bold">Skills</h2>
+				<h2 class="text-xl font-bold">{$t('sections.skills')}</h2>
 			</BlurFade>
 
 			<div class="flex flex-wrap gap-1">
-				{#each DATA.skills as skill, id}
+				{#each DATA.skills as skill, id (skill.name)}
 					<BlurFade delay={BLUR_FADE_DELAY * id + 0.002}>
 						<div class="skill">
 							<div
@@ -161,28 +171,28 @@
 			</div>
 		</div>
 	</section>
+
 	<section id="projects">
 		<div class="w-full space-y-12 py-12">
 			<BlurFade delay={BLUR_FADE_DELAY}>
 				<div class="flex flex-col items-center justify-center space-y-4 text-center">
 					<div class="space-y-2">
 						<div class="inline-block rounded-lg bg-foreground px-3 py-1 text-sm text-background">
-							My Projects
+							{$t('projects.badge')}
 						</div>
 						<h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">
-							Check out my latest work
+							{$t('projects.title')}
 						</h2>
 						<p
 							class="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed"
 						>
-							I&apos;ve worked on a variety of projects, from simple websites to complex web
-							applications. Here are a few of my favorites.
+							{$t('projects.description')}
 						</p>
 					</div>
 				</div>
 			</BlurFade>
 			<div class="mx-auto grid max-w-[800px] grid-cols-1 gap-3 sm:grid-cols-2">
-				{#each DATA.projects as project, id}
+				{#each DATA.projects as project, id (project.title + $locale)}
 					<BlurFade delay={BLUR_FADE_DELAY * 1.5 + id * 0.05}>
 						<ProjectCard
 							href={project.href}
@@ -199,30 +209,29 @@
 			</div>
 		</div>
 	</section>
+
 	<section id="hackathons">
 		<div class="w-full space-y-12 py-12">
 			<BlurFade delay={BLUR_FADE_DELAY}>
 				<div class="flex flex-col items-center justify-center space-y-4 text-center">
 					<div class="space-y-2">
 						<div class="inline-block rounded-lg bg-foreground px-3 py-1 text-sm text-background">
-							Hackathons
+							{$t('hackathons.badge')}
 						</div>
-						<h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">I like building things</h2>
+						<h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">
+							{$t('hackathons.title')}
+						</h2>
 						<p
 							class="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed"
 						>
-							During my time in university, I attended{' '}
-							{DATA.hackathons.length}+ hackathons. People from around the country would come
-							together and build incredible things in 2-3 days. It was eye-opening to see the
-							endless possibilities brought to life by a group of motivated and passionate
-							individuals.
+							{$t('hackathons.description', { count: DATA.hackathons.length })}
 						</p>
 					</div>
 				</div>
 			</BlurFade>
 			<BlurFade delay={BLUR_FADE_DELAY * 2}>
 				<ul class="mb-4 ml-4 divide-y divide-dashed border-l">
-					{#each DATA.hackathons as project}
+					{#each DATA.hackathons as project (project.title + $locale)}
 						<BlurFade delay={BLUR_FADE_DELAY}>
 							<HackathonCard {...project} />
 						</BlurFade>
@@ -231,22 +240,25 @@
 			</BlurFade>
 		</div>
 	</section>
+
 	<section id="contact">
-		<div class="grid w-full items-cen	ter justify-center gap-4 px-4 py-12 text-center md:px-6">
+		<div class="grid w-full items-center justify-center gap-4 px-4 py-12 text-center md:px-6">
 			<BlurFade delay={BLUR_FADE_DELAY * 2}>
 				<div class="space-y-3">
 					<div class="inline-block rounded-lg bg-foreground px-3 py-1 text-sm text-background">
-						Contact
+						{$t('contact.badge')}
 					</div>
-					<h2 class="text-3xl font-bold tracking-tight sm:text-5xl">Get in Touch</h2>
+					<h2 class="text-3xl font-bold tracking-tight sm:text-5xl">
+						{$t('contact.title')}
+					</h2>
 					<p
 						class="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed"
 					>
-						Want to chat? Just shoot me a dm
+						{$t('contact.description_prefix')}{' '}
 						<a href={DATA.contact.social.Instagram.url} class="text-blue-500 hover:underline">
-							with a direct question on {DATA.contact.social.Instagram.name}
+							{$t('contact.description_link')}
 						</a>
-						and I&apos;ll respond whenever I can. I will ignore all soliciting.
+						{' '}{$t('contact.description_suffix')}
 					</p>
 				</div>
 			</BlurFade>
@@ -330,7 +342,4 @@
 			transform: rotate(0deg);
 		}
 	}
-
-
-
 </style>

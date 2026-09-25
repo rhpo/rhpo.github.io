@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { UNIVERSITY_DATA, type DocumentGroup, type DocumentVariant } from '$lib/data/transcripts';
+	import { getUniversityData, type DocumentGroup, type DocumentVariant } from '$lib/data/transcripts';
 	import DocumentViewerModal from '$lib/components/university/DocumentViewerModal.svelte';
 	import BlurFade from '$lib/components/magic/BlurFade.svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import ModeToggle from '$lib/components/portfolio/ModeToggle.svelte';
+	import LanguageToggle from '$lib/components/portfolio/LanguageToggle.svelte';
+	import { locale, t } from '$lib/i18n';
 	import {
 		ArrowLeft,
 		Download,
@@ -18,6 +20,8 @@
 
 	let BLUR_FADE_DELAY = 0.04;
 
+	$: UNIVERSITY_DATA = getUniversityData($locale);
+
 	// Active variant index per document group (group.id -> index)
 	let activeVariantIndices: Record<string, number> = {
 		transcripts: 0,
@@ -28,7 +32,12 @@
 	};
 
 	// Big global document language toggle: false = English (Translation), true = French (Original)
-	let showOriginal = false;
+	let showOriginal = true;
+	let prevLocale = $locale;
+	$: if ($locale !== prevLocale) {
+		prevLocale = $locale;
+		showOriginal = $locale === 'fr';
+	}
 
 	function setVariant(groupId: string, index: number, e?: MouseEvent) {
 		if (e) {
@@ -81,10 +90,12 @@
 </script>
 
 <svelte:head>
-	<title>Academic Transcripts & University Dossier — {UNIVERSITY_DATA.candidateName}</title>
+	<title>{$locale === 'fr' ? 'Relevés de notes & Dossier universitaire' : 'Academic Transcripts & University Dossier'} — {UNIVERSITY_DATA.candidateName}</title>
 	<meta
 		name="description"
-		content="Official academic transcripts, bachelor's degree diploma, cohort ranking certificates, reference letters, and IELTS credentials for {UNIVERSITY_DATA.candidateName}, {UNIVERSITY_DATA.institution}."
+		content="{$locale === 'fr'
+			? `Relevés de notes officiels, diplôme de licence, attestations de classement, lettres de recommandation et rapport IELTS pour ${UNIVERSITY_DATA.candidateName} (${UNIVERSITY_DATA.institution}).`
+			: `Official academic transcripts, bachelor's degree diploma, cohort ranking certificates, reference letters, and IELTS credentials for ${UNIVERSITY_DATA.candidateName}, ${UNIVERSITY_DATA.institution}.`}"
 	/>
 	<meta
 		name="keywords"
@@ -94,21 +105,25 @@
 
 	<!-- Open Graph / Facebook -->
 	<meta property="og:type" content="profile" />
-	<meta property="og:title" content="Academic Transcripts & University Dossier — {UNIVERSITY_DATA.candidateName}" />
+	<meta property="og:title" content="{$locale === 'fr' ? 'Relevés de notes & Dossier universitaire' : 'Academic Transcripts & University Dossier'} — {UNIVERSITY_DATA.candidateName}" />
 	<meta
 		property="og:description"
-		content="Official transcripts, bachelor's degree diploma, class rankings, reference letters, and IELTS records for {UNIVERSITY_DATA.candidateName} ({UNIVERSITY_DATA.institution})."
+		content="{$locale === 'fr'
+			? `Relevés de notes officiels, diplôme de licence, attestations de classement, lettres de recommandation et rapport IELTS pour ${UNIVERSITY_DATA.candidateName} (${UNIVERSITY_DATA.institution}).`
+			: `Official transcripts, bachelor's degree diploma, class rankings, reference letters, and IELTS records for ${UNIVERSITY_DATA.candidateName} (${UNIVERSITY_DATA.institution}).`}"
 	/>
 	<meta property="og:site_name" content="{UNIVERSITY_DATA.candidateName} Portfolio" />
 	<meta property="og:image" content="https://avatars.githubusercontent.com/u/69460661?v=4" />
-	<meta property="og:locale" content="en_US" />
+	<meta property="og:locale" content={$locale === 'fr' ? 'fr_FR' : 'en_US'} />
 
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Academic Transcripts & University Dossier — {UNIVERSITY_DATA.candidateName}" />
+	<meta name="twitter:title" content="{$locale === 'fr' ? 'Relevés de notes & Dossier universitaire' : 'Academic Transcripts & University Dossier'} — {UNIVERSITY_DATA.candidateName}" />
 	<meta
 		name="twitter:description"
-		content="Official transcripts, bachelor's degree diploma, class rankings, reference letters, and IELTS records for {UNIVERSITY_DATA.candidateName} ({UNIVERSITY_DATA.institution})."
+		content="{$locale === 'fr'
+			? `Relevés de notes officiels, diplôme de licence, attestations de classement, lettres de recommandation et rapport IELTS pour ${UNIVERSITY_DATA.candidateName} (${UNIVERSITY_DATA.institution}).`
+			: `Official transcripts, bachelor's degree diploma, class rankings, reference letters, and IELTS records for ${UNIVERSITY_DATA.candidateName} (${UNIVERSITY_DATA.institution}).`}"
 	/>
 	<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/69460661?v=4" />
 
@@ -129,7 +144,7 @@
 				class="inline-flex items-center gap-2 rounded-lg border border-border/60 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur transition-all hover:bg-accent hover:text-foreground"
 			>
 				<ArrowLeft class="size-3.5" />
-				<span>Back to Portfolio</span>
+				<span>{$t('university.backToPortfolio')}</span>
 			</a>
 		</BlurFade>
 
@@ -140,9 +155,10 @@
 					class="hidden sm:inline-flex gap-1 py-1 text-[11px] font-normal text-muted-foreground border-border/80"
 				>
 					<ShieldCheck class="size-3.5 text-emerald-500" />
-					Official Dossier
+					{$t('university.officialDossier')}
 				</Badge>
-				<div class="border-l border-border/50 pl-2">
+				<div class="border-l border-border/50 pl-2 flex items-center gap-1">
+					<LanguageToggle class="size-8" />
 					<ModeToggle />
 				</div>
 			</div>
@@ -164,16 +180,16 @@
 
 				<BlurFade delay={BLUR_FADE_DELAY * 2}>
 					<h1 class="text-3xl font-bold tracking-tight sm:text-4xl text-foreground">
-						Academic Records & Transcripts
+						{$t('university.title')}
 					</h1>
 				</BlurFade>
 
 				<BlurFade delay={BLUR_FADE_DELAY * 2.5}>
 					<p class="max-w-2xl text-sm sm:text-base text-muted-foreground leading-relaxed">
-						Complete documentation package for <strong class="text-foreground font-semibold"
+						{$t('university.descriptionPrefix')} <strong class="text-foreground font-semibold"
 							>{UNIVERSITY_DATA.candidateName}</strong
 						>
-						— {UNIVERSITY_DATA.degree} in {UNIVERSITY_DATA.field} ({UNIVERSITY_DATA.period}) studied fully in the French language.
+						{$t('university.descriptionMiddle')} {UNIVERSITY_DATA.degree} {$t('university.descriptionFieldPrefix')} {UNIVERSITY_DATA.field} ({UNIVERSITY_DATA.period}), {$t('university.descriptionLanguage')}
 					</p>
 				</BlurFade>
 			</div>
@@ -194,9 +210,9 @@
 	<BlurFade delay={BLUR_FADE_DELAY * 2.8}>
 		<div class="mb-6 w-full space-y-1.5">
 			<div class="flex items-center justify-between text-xs text-muted-foreground font-medium px-1">
-				<span class="uppercase tracking-wider text-[10px] font-semibold text-muted-foreground">Document Language</span>
+				<span class="uppercase tracking-wider text-[10px] font-semibold text-muted-foreground">{$t('university.docLanguage')}</span>
 				<span class="text-xs text-foreground font-medium">
-					{showOriginal ? 'Authentic Originals (FR / AR)' : 'Certified English Translations'}
+					{showOriginal ? $t('university.originalStatus') : $t('university.translatedStatus')}
 				</span>
 			</div>
 			<div class="grid grid-cols-2 gap-1 w-full rounded-xl border border-border/80 bg-muted/30 p-1 shadow-xs backdrop-blur-sm">
@@ -206,7 +222,7 @@
 					on:click={() => (showOriginal = false)}
 				>
 					<Languages class="size-3.5" />
-					<span>English (Translation)</span>
+					<span>{$t('university.btnEnglish')}</span>
 				</button>
 				<button
 					type="button"
@@ -214,7 +230,7 @@
 					on:click={() => (showOriginal = true)}
 				>
 					<FileText class="size-3.5" />
-					<span>French (Original)</span>
+					<span>{$t('university.btnFrench')}</span>
 				</button>
 			</div>
 		</div>
@@ -247,6 +263,22 @@
 								<Badge variant="secondary" class="text-[11px] shrink-0 font-medium">
 									{group.badge}
 								</Badge>
+							</div>
+
+							<!-- Multi-Variant Selector (Tabs for L1, L2, L3 etc.) -->
+							{#if group.variants.length > 1}
+								<div class="flex flex-wrap gap-1 rounded-xl bg-muted/60 p-1">
+									{#each group.variants as variant, variantIdx}
+										<button
+											type="button"
+											class="flex-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all {activeVariantIdx === variantIdx ? 'bg-background text-foreground shadow-xs font-bold' : 'text-muted-foreground hover:text-foreground'}"
+											on:click={(e) => setVariant(group.id, variantIdx, e)}
+										>
+											{variant.shortLabel}
+										</button>
+									{/each}
+								</div>
+							{/if}
 						</div>
 
 						<!-- Document Image Preview Container (Clickable to Zoom) -->
@@ -256,7 +288,7 @@
 							role="button"
 							tabindex="0"
 							on:keydown={(e) => e.key === 'Enter' && openViewer(group)}
-							aria-label="Click to zoom {group.title} - {currentVariant.label}"
+							aria-label="{$t('university.openViewerAria')} {group.title} - {currentVariant.label}"
 						>
 							<img
 								src={activeSrc}
@@ -278,7 +310,7 @@
 									class="inline-flex items-center gap-1.5 rounded-full bg-background/90 px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-xl backdrop-blur-md"
 								>
 									<ZoomIn class="size-3.5" />
-									Click to Zoom & Pan
+									{$t('university.clickToZoom')}
 								</span>
 							</div>
 
@@ -298,14 +330,14 @@
 										variant={showOrig ? 'default' : 'secondary'}
 										class="backdrop-blur-md text-[10px] font-medium border border-border/60 {showOrig ? 'bg-primary text-primary-foreground' : 'bg-background/85'}"
 									>
-										{showOrig ? `Original (${currentVariant.originalLanguage})` : 'Translated (EN)'}
+										{showOrig ? (currentVariant.originalLanguage === 'AR' ? 'Original (AR)' : 'Original (FR)') : ($locale === 'fr' ? 'Traduit (EN)' : 'Translated (EN)')}
 									</Badge>
 								{:else if currentVariant.pdfSrc}
 									<Badge
 										variant="secondary"
 										class="bg-background/85 backdrop-blur-md text-[10px] border border-border/60"
 									>
-										PDF Included
+										{$t('university.pdfIncluded')}
 									</Badge>
 								{/if}
 							</div>
@@ -328,10 +360,10 @@
 										type="button"
 										class="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border bg-card px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 										on:click={(e) => openViewer(group, e)}
-										title="Open zoomable full-screen viewer"
+										title={$t('university.zoom')}
 									>
 										<ZoomIn class="size-3.5" />
-										<span>Zoom</span>
+										<span>{$t('university.zoom')}</span>
 									</button>
 
 									<!-- Download Active Document -->
@@ -339,10 +371,10 @@
 										type="button"
 										class="inline-flex h-8 items-center gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-xs transition-colors hover:bg-primary/90"
 										on:click={(e) => downloadActiveVariant(group, e)}
-										title="Download selected document"
+										title={$t('university.download')}
 									>
 										<Download class="size-3.5" />
-										<span>Download {showOrig ? `(${currentVariant.originalLanguage})` : '(EN)'}</span>
+										<span>{$t('university.download')} {showOrig ? `(${currentVariant.originalLanguage})` : '(EN)'}</span>
 									</button>
 
 									<!-- IELTS PDF Download if present -->
@@ -351,7 +383,7 @@
 											href={currentVariant.pdfSrc}
 											download={currentVariant.pdfDownloadName}
 											class="inline-flex size-8 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-											title="Download PDF report"
+											title={$locale === 'fr' ? 'Télécharger le rapport PDF' : 'Download PDF report'}
 										>
 											<FileText class="size-3.5 text-red-500" />
 										</a>
@@ -379,10 +411,10 @@
 				</div>
 				<div class="min-w-0">
 					<p class="truncate text-xs sm:text-sm font-semibold text-foreground">
-						Complete Academic Dossier
+						{$t('university.completeDossier')}
 					</p>
 					<p class="truncate text-[10px] sm:text-xs text-muted-foreground">
-						Full Transcript &bull; {UNIVERSITY_DATA.fullTranscriptPdf.fileSize} PDF
+						{$locale === 'fr' ? `Dossier complet • PDF de ${UNIVERSITY_DATA.fullTranscriptPdf.fileSize}` : `Full Transcript • ${UNIVERSITY_DATA.fullTranscriptPdf.fileSize} PDF`}
 					</p>
 				</div>
 			</div>
@@ -395,7 +427,7 @@
 					target="_blank"
 					rel="noreferrer"
 					class="hidden sm:inline-flex size-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
-					title="Preview PDF in new window"
+					title={$t('university.previewPdf')}
 				>
 					<ExternalLink class="size-3.5" />
 				</a>
@@ -407,7 +439,7 @@
 					class="inline-flex h-9 sm:h-10 items-center gap-2 rounded-full bg-primary px-4 sm:px-5 text-xs sm:text-sm font-semibold text-primary-foreground shadow-md transition-all hover:bg-primary/90 hover:shadow-lg active:scale-95"
 				>
 					<Download class="size-3.5 sm:size-4" />
-					<span>Full Transcript (PDF)</span>
+					<span>{$t('university.downloadPdfBtn')}</span>
 				</a>
 			</div>
 		</div>

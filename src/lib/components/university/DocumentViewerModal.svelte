@@ -15,6 +15,7 @@
 		Languages
 	} from 'lucide-svelte';
 	import Badge from '$lib/components/ui/badge/badge.svelte';
+	import { t } from '$lib/i18n';
 
 	export let group: DocumentGroup;
 	export let activeVariantIndex = 0;
@@ -213,10 +214,14 @@
 		transition:fade={{ duration: 150 }}
 	>
 		<!-- Header Toolbar: Left (Info) | Center (Year Toggle) | Right (Language Toggle + Close) -->
-		<header class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 border-b border-border/60 bg-background/80 px-4 py-3 backdrop-blur-md sm:px-6">
+		<header
+			class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 border-b border-border/60 bg-background/80 px-4 py-3 backdrop-blur-md sm:px-6"
+		>
 			<!-- Left: Document Title & Badges -->
 			<div class="flex items-center gap-3 overflow-hidden min-w-0 md:min-w-64">
-				<div class="hidden sm:flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground">
+				<div
+					class="hidden sm:flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground"
+				>
 					<FileText class="size-4.5" />
 				</div>
 				<div class="min-w-0">
@@ -243,7 +248,10 @@
 						{#each variants as v, idx}
 							<button
 								type="button"
-								class="rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all {activeVariantIndex === idx ? 'bg-primary text-primary-foreground shadow-sm font-bold' : 'text-muted-foreground hover:text-foreground'}"
+								class="rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all {activeVariantIndex ===
+								idx
+									? 'bg-primary text-primary-foreground shadow-sm font-bold'
+									: 'text-muted-foreground hover:text-foreground'}"
 								on:click={() => selectVariant(idx)}
 							>
 								{v.shortLabel}
@@ -257,22 +265,28 @@
 			<div class="flex items-center justify-between md:justify-end gap-2 shrink-0 md:min-w-64">
 				<!-- Big Toggle for Original Document on the Right -->
 				{#if activeVariant.hasOriginal}
-					<div class="inline-flex items-center gap-1 rounded-xl border border-border bg-card p-1 shadow-xs">
+					<div
+						class="inline-flex items-center gap-1 rounded-xl border border-border bg-card p-1 shadow-xs"
+					>
 						<button
 							type="button"
-							class="flex items-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-semibold transition-all {!showOriginal ? 'bg-primary text-primary-foreground shadow-xs font-bold' : 'text-muted-foreground hover:text-foreground'}"
+							class="flex items-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-semibold transition-all {!showOriginal
+								? 'bg-primary text-primary-foreground shadow-xs font-bold'
+								: 'text-muted-foreground hover:text-foreground'}"
 							on:click={() => (showOriginal = false)}
 						>
 							<Languages class="size-3.5" />
-							<span>English (Translation)</span>
+							<span>{$t('university.btnEnglish')}</span>
 						</button>
 						<button
 							type="button"
-							class="flex items-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-semibold transition-all {showOriginal ? 'bg-primary text-primary-foreground shadow-xs font-bold' : 'text-muted-foreground hover:text-foreground'}"
+							class="flex items-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-semibold transition-all {showOriginal
+								? 'bg-primary text-primary-foreground shadow-xs font-bold'
+								: 'text-muted-foreground hover:text-foreground'}"
 							on:click={() => (showOriginal = true)}
 						>
 							<FileText class="size-3.5" />
-							<span>{activeVariant.originalLanguage === 'FR' ? 'French (Original)' : `Original (${activeVariant.originalLanguage})`}</span>
+							<span>{activeVariant.originalLanguage === 'FR' ? $t('university.btnFrench') : `Original (${activeVariant.originalLanguage})`}</span>
 						</button>
 					</div>
 				{/if}
@@ -280,9 +294,10 @@
 				<!-- Close Button -->
 				<button
 					type="button"
-					aria-label="Close document viewer"
+					aria-label={$t('university.closeViewer')}
 					class="inline-flex size-9 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 					on:click={onClose}
+					title={$t('university.closeViewer')}
 				>
 					<X class="size-4.5" />
 				</button>
@@ -291,7 +306,12 @@
 
 		<!-- Main Viewport Area -->
 		<div
-			class="relative flex flex-1 items-center justify-center overflow-hidden select-none p-4 {scale > 1 ? (isDragging ? 'cursor-grabbing' : 'cursor-grab') : 'cursor-default'}"
+			class="relative flex flex-1 items-center justify-center overflow-hidden select-none p-4 {scale >
+			1
+				? isDragging
+					? 'cursor-grabbing'
+					: 'cursor-grab'
+				: 'cursor-default'}"
 			on:wheel={handleWheel}
 			on:mousedown={handleMouseDown}
 			on:touchstart={handleTouchStart}
@@ -299,7 +319,8 @@
 			on:touchend={handleTouchEnd}
 			on:dblclick={handleDoubleClick}
 			role="region"
-			aria-label="Interactive document zoom viewer"
+			tabindex="-1"
+			aria-label={$t('university.dragToPan')}
 		>
 			<!-- Previous / Next Group Navigation Arrows -->
 			{#if hasPrevGroup}
@@ -333,7 +354,9 @@
 			-->
 			<div
 				class="will-change-transform flex items-center justify-center max-h-full max-w-full"
-				style="transform: translate3d({translateX}px, {translateY}px, 0) scale({scale}); transform-origin: center center; transition: {isDragging ? 'none' : 'transform 0.18s cubic-bezier(0.16, 1, 0.3, 1)'};"
+				style="transform: translate3d({translateX}px, {translateY}px, 0) scale({scale}); transform-origin: center center; transition: {isDragging
+					? 'none'
+					: 'transform 0.18s cubic-bezier(0.16, 1, 0.3, 1)'};"
 			>
 				<img
 					src={activeSrc}
@@ -346,20 +369,25 @@
 		</div>
 
 		<!-- Bottom Floating Controls Toolbar -->
-		<footer class="flex items-center justify-between border-t border-border/60 bg-background/80 px-4 py-3 backdrop-blur-md sm:px-6">
+		<footer
+			class="flex items-center justify-between border-t border-border/60 bg-background/80 px-4 py-3 backdrop-blur-md sm:px-6"
+		>
 			<div class="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
 				<span class="inline-block size-1.5 rounded-full bg-emerald-500"></span>
-				<span>{scale > 1 ? 'Drag to pan' : 'Scroll wheel or double click to zoom'} &bull; Centered when fitted</span>
+				<span
+					>{scale > 1 ? $t('university.dragToPan') : $t('university.scrollWheelZoom')} &bull;
+					{$t('university.centeredFitted')}</span
+				>
 			</div>
 
 			<!-- Zoom & Download Controls -->
 			<div class="flex items-center gap-1.5 mx-auto sm:mx-0">
 				<button
 					type="button"
-					aria-label="Zoom out"
+					aria-label={$t('university.zoomOut')}
 					class="inline-flex size-8 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground hover:bg-accent hover:text-foreground"
 					on:click={zoomOut}
-					title="Zoom Out (-)"
+					title={$t('university.zoomOut')}
 				>
 					<ZoomOut class="size-3.5" />
 				</button>
@@ -368,27 +396,27 @@
 					type="button"
 					class="inline-flex h-8 min-w-16 items-center justify-center rounded-lg border border-border bg-card px-2 text-xs font-mono font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
 					on:click={resetZoom}
-					title="Reset Zoom to Center (0)"
+					title={$t('university.resetZoom')}
 				>
 					{Math.round(scale * 100)}%
 				</button>
 
 				<button
 					type="button"
-					aria-label="Zoom in"
+					aria-label={$t('university.zoomIn')}
 					class="inline-flex size-8 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground hover:bg-accent hover:text-foreground"
 					on:click={zoomIn}
-					title="Zoom In (+)"
+					title={$t('university.zoomIn')}
 				>
 					<ZoomIn class="size-3.5" />
 				</button>
 
 				<button
 					type="button"
-					aria-label="Fit to Screen"
+					aria-label={$t('university.fitScreen')}
 					class="inline-flex size-8 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground hover:bg-accent hover:text-foreground"
 					on:click={resetZoom}
-					title="Fit to Screen & Center"
+					title={$t('university.fitScreen')}
 				>
 					<RotateCcw class="size-3.5" />
 				</button>
@@ -400,10 +428,14 @@
 					type="button"
 					class="inline-flex h-8 items-center gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow transition-colors hover:bg-primary/90"
 					on:click={handleDownload}
-					title="Download currently viewed document"
+					title={$t('university.download')}
 				>
 					<Download class="size-3.5" />
-					<span>Download {showOriginal && activeVariant.hasOriginal ? `(${activeVariant.originalLanguage})` : '(EN)'}</span>
+					<span
+						>{$t('university.download')} {showOriginal && activeVariant.hasOriginal
+							? `(${activeVariant.originalLanguage})`
+							: '(EN)'}</span
+					>
 				</button>
 
 				<!-- Open in new tab -->
@@ -412,7 +444,7 @@
 					target="_blank"
 					rel="noreferrer"
 					class="inline-flex size-8 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground hover:bg-accent hover:text-foreground"
-					title="Open original high-res image in new tab"
+					title={$t('university.openHighRes')}
 				>
 					<ExternalLink class="size-3.5" />
 				</a>

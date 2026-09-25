@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { formatDate } from '$lib/utils';
 	import BlurFade from '$lib/components/magic/BlurFade.svelte';
+	import { locale } from '$lib/i18n';
 
 	export let data;
 	let BLUR_FADE_DELAY = 0.04;
-	
 </script>
 
 <svelte:head>
-	<title>Blog</title>
+	<title>Blog — Rami Hadid</title>
 </svelte:head>
 
 <BlurFade delay={BLUR_FADE_DELAY}>
@@ -24,7 +24,7 @@
 						<div class="flex w-full flex-col">
 							<p class="tracking-tight">{post.title}</p>
 							<p class="h-6 text-xs text-muted-foreground">
-								{formatDate(post.date)}
+								{formatDate(post.date, 'medium', $locale)}
 							</p>
 						</div>
 					</a>

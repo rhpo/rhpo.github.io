@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { DATA } from '$lib/data/resume';
+	import { getResumeData } from '$lib/data/resume';
+	import { locale, t } from '$lib/i18n';
+	import { onMount } from 'svelte';
 	import Dock from '../magic/Dock.svelte';
 	import DockIcon from '../magic/DockIcon.svelte';
 	import * as Tooltip from '$lib/components/ui/tooltip';
@@ -7,7 +9,13 @@
 	import ModeToggle from './ModeToggle.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { mode } from 'mode-watcher';
+
 	$: theme = $mode;
+	$: DATA = getResumeData($locale);
+
+	onMount(() => {
+		locale.init();
+	});
 </script>
 
 <div
@@ -27,7 +35,6 @@
 				<Tooltip.Root openDelay={300}>
 					<Tooltip.Trigger>
 						<Button href={item.href} variant="ghost" size="icon" class="size-12 rounded-full">
-							<!-- <item.icon class="size-4" /> -->
 							<svelte:component this={item.icon} class="size-[18px]" strokeWidth={1.5} />
 						</Button>
 					</Tooltip.Trigger>
@@ -45,14 +52,19 @@
 				<Tooltip.Root openDelay={300}>
 					<Tooltip.Trigger>
 						<Button href={social.url} variant="ghost" size="icon" class="size-12 rounded-full">
-							<!-- <svelte:component this={social.icon} class="size-4" strokeWidth={1.5} /> -->
-
 							{#if typeof social.icon === 'string'}
-								<img src={theme ==='light' ? social.icon : social.dark_icon} alt={social.name} class="size-4" />
+								<img
+									src={theme === 'light'
+										? social.icon
+										: typeof social.dark_icon === 'string'
+											? social.dark_icon
+											: social.icon}
+									alt={social.name}
+									class="size-4"
+								/>
 							{:else}
 								<svelte:component this={social.icon} class="size-[18px]" strokeWidth={1.5} />
 							{/if}
-
 						</Button>
 					</Tooltip.Trigger>
 					<Tooltip.Content>
@@ -68,7 +80,7 @@
 					<ModeToggle />
 				</Tooltip.Trigger>
 				<Tooltip.Content>
-					<p>Theme</p>
+					<p>{$t('nav.theme')}</p>
 				</Tooltip.Content>
 			</Tooltip.Root>
 		</DockIcon>

@@ -5,17 +5,19 @@
 	import { ChevronRightIcon } from 'lucide-svelte';
 	import { quartOut } from 'svelte/easing';
 	import { slide } from 'svelte/transition';
+	import { t } from '$lib/i18n';
+
 	export let logoUrl: string = '';
 	export let company: string = '';
 	export let title: string = '';
 	export let href: string = '';
-	export let badges: string[]=[''];
+	export let badges: string[] = [''];
 	export let description: string = '';
 	export let start: string = '';
 	export let end: string = '';
 	let isExpanded = false;
 
-	let handleClick = (e: MouseEvent) => {
+	let handleClick = (e: MouseEvent | KeyboardEvent) => {
 		if (description) {
 			e.preventDefault();
 			isExpanded = !isExpanded;
@@ -23,7 +25,7 @@
 	};
 </script>
 
-<a href={href || '#'} target={href ? "_blank" : "_self"} class="cursor-pointer">
+<a href={href || '#'} target={href ? '_blank' : '_self'} class="cursor-pointer">
 	<div class="flex rounded-lg bg-card text-card-foreground">
 		<div class="flex-none">
 			<Avatar.Root class="bg-muted-background m-auto size-12 border dark:bg-foreground">
@@ -32,7 +34,13 @@
 			</Avatar.Root>
 		</div>
 		<div class="group ml-4 flex-grow flex-col items-center">
-			<div class="flex flex-col" on:click={handleClick}>
+			<div
+				class="flex flex-col cursor-pointer"
+				on:click={handleClick}
+				on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && handleClick(e)}
+				role="button"
+				tabindex="0"
+			>
 				<div class="flex items-center justify-between gap-x-2 text-base">
 					<h3
 						class="inline-flex items-center justify-center text-xs font-semibold leading-none sm:text-sm"
@@ -55,7 +63,7 @@
 						/>
 					</h3>
 					<div class="text-right text-xs tabular-nums text-muted-foreground sm:text-sm">
-						{start} - {end || 'Present'}
+						{start} - {end || $t('common.present')}
 					</div>
 				</div>
 				{#if title}
@@ -71,11 +79,23 @@
 							easing: quartOut
 						}}
 					>
-					<span on:click={handleClick}>{description}</span>
+						<span
+							on:click={handleClick}
+							on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && handleClick(e)}
+							role="button"
+							tabindex="0"
+						>
+							{description}
+						</span>
 
 						<div class="url mt-2">
 							{#if href}
-								<a href={href} target="_blank" rel="noopener noreferrer" class="text-xs text-blue-400 hover:underline">
+								<a
+									href={href}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="text-xs text-blue-400 hover:underline"
+								>
 									{href}
 								</a>
 							{/if}
