@@ -413,9 +413,9 @@ export const UNIVERSITY_DATA_EN: UniversityDossier = {
 	]
 };
 
-export function getUniversityData(loc: Locale = 'fr'): UniversityDossier {
-	return loc === 'en' ? UNIVERSITY_DATA_EN : UNIVERSITY_DATA_FR;
+export function getUniversityData(loc: Locale = 'en'): UniversityDossier {
+	return loc === 'fr' ? UNIVERSITY_DATA_FR : UNIVERSITY_DATA_EN;
 }
 
-// Default export in French
-export const UNIVERSITY_DATA: UniversityDossier = UNIVERSITY_DATA_FR;
+// Default export in English
+export const UNIVERSITY_DATA: UniversityDossier = UNIVERSITY_DATA_EN;

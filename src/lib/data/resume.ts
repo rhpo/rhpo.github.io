@@ -193,6 +193,40 @@ export const DATA_FR = {
 		}
 	],
 	projects: [
+				{
+			title: 'Le langage de programmation Luna',
+			href: '#',
+			dates: 'Juil 2023 - Présent',
+			active: true,
+			description:
+				'Un langage de programmation élégant et polyvalent doté de capacités d’automatisation performantes, conçu en TypeScript pour allier simplicité et productivité au quotidien 🤖.',
+			technologies: ['Compilers', 'Interpreters', 'Lexers', 'Transpilers', 'Go', 'TypeScript'],
+			links: [
+				{
+					type: 'Code source',
+					href: 'https://www.github.com/rhpo/luna',
+					icon: Github
+				}
+			],
+			image: '/luna.png'
+		},
+		{
+			title: 'Plateforme de gestion de projets académiques (LMS)',
+			href: '#',
+			dates: 'Janv 2026 - Mai 2026',
+			active: true,
+			description:
+				'Plateforme full-stack pour le suivi et la gestion complète du cycle de vie des projets de fin d’études universitaires (PFE), conçue avec Go, Fiber v3, SQLite et SvelteKit 5.',
+			technologies: ['Go', 'Fiber v3', 'SvelteKit 5', 'SQLite', 'TypeScript'],
+			links: [
+				{
+					type: 'Code source',
+					href: 'https://www.github.com/rhpo/lms',
+					icon: Github
+				}
+			],
+			image: '/lms.png'
+		},
 		{
 			title: 'Boutique de parfumerie de luxe',
 			href: 'https://gentlemandz.com',
@@ -237,40 +271,6 @@ export const DATA_FR = {
 			image: '',
 			video: '/livresdz.mp4'
 		},
-		{
-			title: 'Le langage de programmation Luna',
-			href: '#',
-			dates: 'Juil 2023 - Présent',
-			active: true,
-			description:
-				'Un langage de programmation élégant et polyvalent doté de capacités d’automatisation performantes, conçu en TypeScript pour allier simplicité et productivité au quotidien 🤖.',
-			technologies: ['Compilers', 'Interpreters', 'Lexers', 'Transpilers', 'Go', 'TypeScript'],
-			links: [
-				{
-					type: 'Code source',
-					href: 'https://www.github.com/rhpo/luna',
-					icon: Github
-				}
-			],
-			image: '/luna.png'
-		},
-		{
-			title: 'Plateforme de gestion de projets académiques (LMS)',
-			href: '#',
-			dates: 'Janv 2026 - Mai 2026',
-			active: true,
-			description:
-				'Plateforme full-stack pour le suivi et la gestion complète du cycle de vie des projets de fin d’études universitaires (PFE), conçue avec Go, Fiber v3, SQLite et SvelteKit 5.',
-			technologies: ['Go', 'Fiber v3', 'SvelteKit 5', 'SQLite', 'TypeScript'],
-			links: [
-				{
-					type: 'Code source',
-					href: 'https://www.github.com/rhpo/lms',
-					icon: Github
-				}
-			],
-			image: '/lms.png'
-		}
 	],
 	hackathons: [
 		{
@@ -631,9 +631,9 @@ export const DATA_EN = {
 	]
 };
 
-export function getResumeData(loc: Locale = 'fr') {
-	return loc === 'en' ? DATA_EN : DATA_FR;
+export function getResumeData(loc: Locale = 'en') {
+	return loc === 'fr' ? DATA_FR : DATA_EN;
 }
 
-// Default export in French as requested
-export let DATA = DATA_FR;
+// Default export in English as requested
+export let DATA = DATA_EN;

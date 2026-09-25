@@ -28,7 +28,7 @@ export const translations = {
 		'projects.badge': 'Mes réalisations',
 		'projects.title': 'Découvrez mes derniers projets',
 		'projects.description':
-			"J'ai développé une grande diversité de projets, allant de sites vitrines à des applications web complexes. En voici quelques-uns parmi mes préférés.",
+			"J'ai développé une grande diversité de projets, allant de projets personnels innovants à des applications web complexes. En voici quelques-uns parmi mes préférés.",
 		'sections.hackathons': 'Hackathons',
 		'hackathons.badge': 'Hackathons',
 		'hackathons.title': "J'aime bâtir des projets",
