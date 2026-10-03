@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>Blog — Rami Hadid</title>
+	<title>Blog - Rami Hadid</title>
 </svelte:head>
 
 <BlurFade delay={BLUR_FADE_DELAY}>

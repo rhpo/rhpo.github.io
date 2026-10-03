@@ -5,7 +5,6 @@
 	import * as Avatar from '$lib/components/ui/avatar';
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import ModeToggle from '$lib/components/portfolio/ModeToggle.svelte';
-	import LanguageToggle from '$lib/components/portfolio/LanguageToggle.svelte';
 	import { locale, t } from '$lib/i18n';
 	import {
 		ArrowLeft,
@@ -158,7 +157,6 @@
 					{$t('university.officialDossier')}
 				</Badge>
 				<div class="border-l border-border/50 pl-2 flex items-center gap-1">
-					<LanguageToggle class="size-8" />
 					<ModeToggle />
 				</div>
 			</div>

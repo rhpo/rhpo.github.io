@@ -168,6 +168,19 @@ export const UNIVERSITY_DATA_FR: UniversityDossier = {
 					originalSrc: '/university/licence/ranking/Original-FR/2nd Year.jpg',
 					translatedDownloadName: 'Rami_Hadid_Ranking_Year2_EN.jpg',
 					originalDownloadName: 'Rami_Hadid_Ranking_Year2_FR.jpg'
+				},
+				{
+					id: 'ranking-l3',
+					label: 'Classement 3ème Année',
+					shortLabel: '3ème Année',
+					subLabel: 'Promotion L3',
+					year: '2025 - 2026',
+					hasOriginal: true,
+					originalLanguage: 'FR',
+					translatedSrc: '/university/licence/ranking/Translaion-EN/3rd Year.png',
+					originalSrc: '/university/licence/ranking/Original-FR/3rd Year.png',
+					translatedDownloadName: 'Rami_Hadid_Ranking_Year2_EN.png',
+					originalDownloadName: 'Rami_Hadid_Ranking_Year2_FR.png'
 				}
 			]
 		},
@@ -353,6 +366,19 @@ export const UNIVERSITY_DATA_EN: UniversityDossier = {
 					originalSrc: '/university/licence/ranking/Original-FR/2nd Year.jpg',
 					translatedDownloadName: 'Rami_Hadid_Ranking_Year2_EN.jpg',
 					originalDownloadName: 'Rami_Hadid_Ranking_Year2_FR.jpg'
+				},
+				{
+					id: 'ranking-l3',
+					label: '3rd Year Ranking',
+					shortLabel: '3rd Year',
+					subLabel: 'L3 Promotion',
+					year: '2025 - 2026',
+					hasOriginal: true,
+					originalLanguage: 'FR',
+					translatedSrc: '/university/licence/ranking/Translaion-EN/3rd Year.png',
+					originalSrc: '/university/licence/ranking/Original-FR/3rd Year.png',
+					translatedDownloadName: 'Rami_Hadid_Ranking_Year3_EN.png',
+					originalDownloadName: 'Rami_Hadid_Ranking_Year3_FR.png'
 				}
 			]
 		},

@@ -18,9 +18,9 @@
 </script>
 
 <svelte:head>
-	<title>{DATA.name} — {$locale === 'fr' ? 'Ingénieur Logiciel & Entrepreneur' : 'Software Engineer & Entrepreneur'}</title>
+	<title>{DATA.name} - {$locale === 'fr' ? 'Ingénieur Logiciel & Entrepreneur' : 'Software Engineer & Entrepreneur'}</title>
 	<meta name="description" content={DATA.description} />
-	<meta property="og:title" content="{DATA.name} — {$locale === 'fr' ? 'Ingénieur Logiciel' : 'Software Engineer'}" />
+	<meta property="og:title" content="{DATA.name} - {$locale === 'fr' ? 'Ingénieur Logiciel' : 'Software Engineer'}" />
 	<meta property="og:description" content={DATA.description} />
 	<meta property="og:url" content={DATA.url} />
 	<meta property="og:site_name" content={DATA.name} />
@@ -32,7 +32,7 @@
 		name="googlebot"
 		content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
 	/>
-	<meta name="twitter:title" content="{DATA.name} — {$locale === 'fr' ? 'Ingénieur Logiciel' : 'Software Engineer'}" />
+	<meta name="twitter:title" content="{DATA.name} - {$locale === 'fr' ? 'Ingénieur Logiciel' : 'Software Engineer'}" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:image" content={DATA.img} />
 	<meta name="twitter:description" content={DATA.description} />
