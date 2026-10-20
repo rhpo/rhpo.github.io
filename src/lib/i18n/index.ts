@@ -38,6 +38,20 @@ function createLocaleStore() {
 		},
 		init: () => {
 			if (typeof window !== 'undefined') {
+				// Query parameter takes highest priority (e.g. ?lang=en)
+				const params = new URLSearchParams(window.location.search);
+				const queryLang = params.get('lang') as Locale | null;
+				if (queryLang === 'fr' || queryLang === 'en') {
+					try {
+						localStorage.setItem(STORAGE_KEY, queryLang);
+					} catch (e) {
+						// Ignore
+					}
+					set(queryLang);
+					document.documentElement.lang = queryLang;
+					return;
+				}
+
 				try {
 					const saved = localStorage.getItem(STORAGE_KEY) as Locale | null;
 					if (saved === 'fr' || saved === 'en') {
